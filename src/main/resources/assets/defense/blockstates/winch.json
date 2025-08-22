@@ -1,5 +1,11 @@
 {
   "variants": {
-    "": { "model": "defense:block/winch" }
+    "chain_length=0": { "model": "defense:block/winch/0" },
+    "chain_length=1": { "model": "defense:block/winch/1" },
+    "chain_length=2": { "model": "defense:block/winch/2" },
+    "chain_length=3": { "model": "defense:block/winch/3" },
+    "chain_length=4": { "model": "defense:block/winch/4" },
+    "chain_length=5": { "model": "defense:block/winch/5" },
+    "chain_length=6": { "model": "defense:block/winch/6" }
   }
 }

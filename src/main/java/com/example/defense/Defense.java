@@ -1,11 +1,10 @@
 package com.example.defense;
 
-import com.example.defense.winch.WinchBlock;
-import com.example.defense.winch.WinchBlockEntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.common.MinecraftForge;
@@ -29,7 +28,7 @@ public class Defense
     // Create a Deferred Register to hold Items which will all be registered under the "defense" namespace
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
 
-    public static final RegistryObject<Block> WINCH = BLOCKS.register("winch", () -> new WinchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));;
+    public static final RegistryObject<Block> WINCH = BLOCKS.register("winch", () -> new WinchBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
     public static final RegistryObject<Item> WINCH_ITEM = ITEMS.register("winch", () -> new BlockItem(WINCH.get(), new Item.Properties()));
 
     public Defense(FMLJavaModLoadingContext context)
@@ -41,9 +40,10 @@ public class Defense
         // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
 
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-        WinchBlockEntityType.BLOCK_ENTITY_TYPES.register(modEventBus);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);

@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "defense:block/winch/1",
+    "up": "defense:block/winch/1",
+    "north": "defense:block/winch/1",
+    "south": "defense:block/winch/1",
+    "west": "minecraft:block/oak_planks",
+    "east": "minecraft:block/oak_planks",
+    "particle": "defense:block/winch/1"
+  }
+}
