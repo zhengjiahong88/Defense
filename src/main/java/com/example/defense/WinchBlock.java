@@ -6,6 +6,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -112,6 +115,19 @@ public class WinchBlock extends Block implements EntityBlock {
             else winch.sub();
             level.setBlock(pos, state.setValue(CHAIN_LENGTH, winch.getChainLength()), 3);
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onRemove(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock())) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof WinchBlockEntity winch) {
+                level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(Items.CHAIN, winch.getChainLength())));
+                level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(Defense.WINCH_ITEM.get(), 1)));
+            }
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Nullable
