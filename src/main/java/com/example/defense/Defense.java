@@ -6,7 +6,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -31,9 +30,9 @@ public class Defense
     public static final RegistryObject<Block> WINCH = BLOCKS.register("winch", () -> new WinchBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
     public static final RegistryObject<Item> WINCH_ITEM = ITEMS.register("winch", () -> new BlockItem(WINCH.get(), new Item.Properties()));
 
-    public Defense(FMLJavaModLoadingContext context)
+    public Defense()
     {
-        IEventBus modEventBus = context.getModEventBus();
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
@@ -49,13 +48,12 @@ public class Defense
         modEventBus.addListener(this::addCreative);
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
-        context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        FMLJavaModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS)
-            event.accept(WINCH_ITEM);
+        if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) event.accept(WINCH_ITEM);
     }
 }
